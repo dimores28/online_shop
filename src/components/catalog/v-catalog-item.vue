@@ -1,6 +1,6 @@
 <template>
     <div class="v-cattalog-item">
-        <img class="v-cattalog-item__image" :src="require('../assets/images/' + product_data.image)" alt="img">
+        <img class="v-cattalog-item__image" :src="require('@/assets/images/' + product_data.image)" alt="img">
         <p class="v-cattalog-item__name">{{product_data.name}}</p>
         <p class="v-cattalog-item_price">Price: {{product_data.price}} UAH</p>
         <button 

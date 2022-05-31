@@ -1,6 +1,6 @@
 <template>
     <div class="v-catr-item">
-        <img class="v-catr-item__image" :src="require('../assets/images/' + cart_item_data.image)" alt="img">
+        <img class="v-catr-item__image" :src="require('@/assets/images/' + cart_item_data.image)" alt="img">
         <div class="v-catr-item__info">
             <p>{{cart_item_data.name}}</p>
             <p>{{cart_item_data.price}} UAH</p>
