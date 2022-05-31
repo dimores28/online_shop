@@ -9,6 +9,10 @@ export default {
   name: 'App',
   components: {
       vMainWrapper
+  },
+  data:()=>({
+  }),
+  methods:{
   }
 }
 </script>
