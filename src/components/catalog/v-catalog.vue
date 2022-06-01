@@ -5,13 +5,32 @@
         </router-link>
 
         <h1>Catalog</h1>
-        <v-select
-            :selected="selected"
-            :options="categories"
-            @select="sortByCategories"
-            :isExpended="IS_DESKTOP"
-        >
-        </v-select>
+        <div class="filters">
+            <v-select
+                :selected="selected"
+                :options="categories"
+                @select="sortByCategories"
+                :isExpended="IS_DESKTOP"
+            >
+            </v-select>
+
+            <div class="range-slider">
+                <input type="range" min="0" max="10000" step="100" 
+                v-model.number="minPrice"
+                @change="setRangeSlider"
+                >
+                <input type="range" min="0" max="10000" step="100" 
+                v-model.number="maxPrice"
+                @change="setRangeSlider"
+                >
+            </div>
+
+            <div class="range-values">
+                <p>Min: {{minPrice}}</p>
+                <p>Max: {{maxPrice}}</p>
+            </div>
+        </div>
+
         <div class="v-catalog__list">
             <vCatalogItem v-for="producrt in flteredProducts" 
             :key="producrt.article"
@@ -41,7 +60,9 @@ export default {
             {name:'Женские', value: 'ж'},
         ],
         selected: 'Все',
-        sortedProducts: []
+        sortedProducts: [],
+        minPrice: 0,
+        maxPrice: 10000,
     }),
     computed:{
         ...mapGetters([
@@ -65,16 +86,26 @@ export default {
             this.ADD_TO_CART(data);
         },
         sortByCategories(category){
-            this.sortedProducts = [];
-            let vm =this;
+            const vm = this;
+            this.sortedProducts = [...this.PRODUCTS]
+            this.sortedProducts = this.sortedProducts.filter(function (item) {
+            return item.price >= vm.minPrice && item.price <= vm.maxPrice
+            })
+            if (category) {
+                this.sortedProducts = this.sortedProducts.filter(function (e) {
+                    vm.selected = category.name;
+                    return e.category === category.name
+                })
+            }
+        },
+        setRangeSlider(){
+            if(this.minPrice > this.maxPrice){
+               let temp = this.maxPrice;
+               this.maxPrice = this.minPrice; 
+               this.minPrice = temp;
+            }
 
-            this.PRODUCTS.map(function(item){
-                if(item.category === category.name){
-                    vm.sortedProducts.push(item); 
-                }
-            });
-
-            this.selected = category.name;
+            this.sortByCategories();
         }
     },
      mounted(){
@@ -82,6 +113,7 @@ export default {
         .then((response)=>{
             if(response.data){
                 console.log('Data arrived!');
+                this.sortByCategories();
             }
         })
     }
@@ -105,4 +137,36 @@ export default {
             border: solid 1px #aeaeae;
         }
     }
+
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .range-slider{
+        width: 200px;
+        margin: auto 16px;
+        text-align: center;
+        position: relative;
+    }
+
+    .range-slider svg, 
+    .range-slider input[type="range"]{
+        position: absolute;
+        left: 20px;
+        bottom: 0;
+    }
+
+    input[type=range]::-webkit-slider-thumb{
+        z-index: 2;
+        position: relative;
+        top: 2px;
+        margin-top: -5px;
+    }
+
+    .range-values {
+        width: 100px;
+    }
+
 </style>
