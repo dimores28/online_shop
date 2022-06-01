@@ -4,6 +4,7 @@
 
 <script>
 import vMainWrapper from './components/v-main-wrapper.vue'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'App',
@@ -12,15 +13,20 @@ export default {
   },
   data:()=>({
   }),
+  computed:{
+    ...mapGetters(['IS_MOBILE', 'IS_DESKTOP']),
+  },
   methods:{
+    ...mapActions(['SET_MOBILE', 'SET_DESKTOP']),
   },
   mounted(){
+    let cont = this;
     window.addEventListener('resize', function(){
       if(window.innerWidth > 767){
-        console.log('Decktop');
+        cont.SET_DESKTOP();
       }
       else{
-        console.log('Mobile');
+        cont.SET_MOBILE();
       }
     });
   }
