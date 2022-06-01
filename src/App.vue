@@ -13,6 +13,16 @@ export default {
   data:()=>({
   }),
   methods:{
+  },
+  mounted(){
+    window.addEventListener('resize', function(){
+      if(window.innerWidth > 767){
+        console.log('Decktop');
+      }
+      else{
+        console.log('Mobile');
+      }
+    });
   }
 }
 </script>

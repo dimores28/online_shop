@@ -9,6 +9,7 @@
             :selected="selected"
             :options="categories"
             @select="sortByCategories"
+            :isExpended="true"
         >
         </v-select>
         <div class="v-catalog__list">
