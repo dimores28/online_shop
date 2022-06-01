@@ -10,6 +10,8 @@ const actions = {...commonActions, ...apiRequests};
 
 export default createStore({
   state: {
+    isMobile: false,
+    isDesktop: true,
     products:[],
     cart: [],
   },
