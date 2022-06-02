@@ -11,14 +11,14 @@
             <img class="v-cattalog-item__image" :src="require('@/assets/images/' + product_data.image)" alt="img">
             <div>
                 <p class="v-cattalog-item__name">{{product_data.name}}</p>
-                <p class="v-cattalog-item_price">Price: {{product_data.price}} UAH</p>
+                <p class="v-cattalog-item_price">Price: {{$filters.formattedPrice($filters.toFix(product_data.price))}}</p>
                 <p class="v-cattalog-item_price">{{product_data.category}}</p>
             </div>
         </v-popup>
 
         <img class="v-cattalog-item__image" :src="require('@/assets/images/' + product_data.image)" alt="img">
         <p class="v-cattalog-item__name">{{product_data.name}}</p>
-        <p class="v-cattalog-item_price">Price: {{product_data.price}} UAH</p>
+        <p class="v-cattalog-item_price">Price: {{$filters.formattedPrice($filters.toFix(product_data.price))}}</p>
         <button class="v-cattalog-item__show-info"
         @click="showPopupInfo"
         >
@@ -64,8 +64,7 @@ export default {
         closeInfoPopup(){
             this.isInfoPopupVisible = false;
         }
-    }
-
+    },
 }
 </script>
 

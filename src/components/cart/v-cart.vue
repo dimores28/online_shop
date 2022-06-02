@@ -16,7 +16,7 @@
     </div>
     <div class="v-cart__total">
         <p class="v-cart__total_name">Total:</p>
-        <p>{{cartTotalCost}} UAH</p>
+        <p>{{$filters.formattedPrice($filters.toFix(cartTotalCost))}} </p>
     </div>
 </template>
 
