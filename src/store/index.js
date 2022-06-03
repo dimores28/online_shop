@@ -10,6 +10,7 @@ const actions = {...commonActions, ...apiRequests};
 
 export default createStore({
   state: {
+    searchValue: '',
     isMobile: false,
     isDesktop: true,
     products:[],

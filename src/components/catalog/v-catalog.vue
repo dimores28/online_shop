@@ -70,6 +70,7 @@ export default {
             'CART',
             'IS_MOBILE', 
             'IS_DESKTOP',
+            'SEARCH_VALUE',
             ]),
         flteredProducts(){
             if(this.sortedProducts.length){
@@ -106,16 +107,32 @@ export default {
             }
 
             this.sortByCategories();
+        },
+        sortedProductsBySearchValue(value){
+            this.sortedProducts = [...this.PRODUCTS]
+            if(value){
+                this.sortedProducts = this.sortedProducts.filter(function(item){
+                     return item.name.toLowerCase().includes(value.toLowerCase());
+                });
+            }else{
+                this.sortedProducts = this.PRODUCTS;
+            }
+            
         }
     },
      mounted(){
         this.GET_PRODUCTS_FROM_API()
         .then((response)=>{
             if(response.data){
-                console.log('Data arrived!');
                 this.sortByCategories();
+                this.sortedProductsBySearchValue(this.SEARCH_VALUE);
             }
         })
+    },
+    watch:{
+        SEARCH_VALUE(){
+            this.sortedProductsBySearchValue(this.SEARCH_VALUE);
+        }
     }
 }
 </script>
@@ -131,7 +148,7 @@ export default {
 
         &__link_to_cart{
             position: absolute;
-            top: 10px;
+            top: 80px;
             right: 10px;
             padding: @padding * 2;
             border: solid 1px #aeaeae;
